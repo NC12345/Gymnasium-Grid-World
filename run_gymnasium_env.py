@@ -5,8 +5,8 @@ from gymnasium_env.wrappers import RelativePosition
 
 
 env = gymnasium.make("gymnasium_env/GridWorld-v0", render_mode="human",size=5)
-# env = FlattenObservation(env)
-env = RelativePosition(env)
+env = FlattenObservation(env)
+# env = RelativePosition(env)
 obs, info = env.reset()
 
 for _ in range(30):
