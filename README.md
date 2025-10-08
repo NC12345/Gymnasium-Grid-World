@@ -1,4 +1,4 @@
-![Alt text](res/Training Performance.png?raw=true "Training Performance")
+![Alt text](res/Training%20Performance.png?raw=true "Training Performance")
 
 # Gymnasium Examples
 Some simple examples of Gymnasium environments and wrappers.
