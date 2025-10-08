@@ -4,7 +4,7 @@ from gymnasium.wrappers import FlattenObservation
 from gymnasium_env.wrappers import RelativePosition
 
 
-env = gymnasium.make("gymnasium_env/GridWorld-v0", render_mode="human",size=5)
+env = gymnasium.make("gymnasium_env/GridWorld-v0", render_mode="human",size=10)
 env = FlattenObservation(env)
 # env = RelativePosition(env)
 obs, info = env.reset()

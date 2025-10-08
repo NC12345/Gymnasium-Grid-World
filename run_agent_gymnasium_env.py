@@ -6,7 +6,7 @@ import numpy as np
 from collections import defaultdict
 
 # Create environment in human-render mode
-env = gymnasium.make("gymnasium_env/GridWorld-v0", render_mode="human", size=5)
+env = gymnasium.make("gymnasium_env/GridWorld-v0", render_mode="human", size=10)
 env = FlattenObservation(env)  # flatten dict obs into 1D array
 
 # Load Agent

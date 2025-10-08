@@ -14,6 +14,12 @@ class GridWorldAgent:
             discount_factor=0.95
     ):
         self.env = env
+
+        raw = env
+        while hasattr(raw, 'env'):
+            raw = raw.env
+        self.raw_env = raw
+
         self.q_values = defaultdict(lambda: np.zeros(env.action_space.n))
         self.lr = learning_rate
         self.discount_factor = discount_factor
@@ -22,23 +28,44 @@ class GridWorldAgent:
         self.final_epsilon = final_epsilon
         self.training_error = []
 
+        self.prev_state = None
+
     def _state_key(self, obs):
         return tuple(obs)
-
+    
     def get_action(self, obs, exploit_only=False):
         state = self._state_key(obs)
-        if exploit_only or np.random.rand() < self.epsilon:
-            return self.env.action_space.sample()
-        return int(np.argmax(self.q_values[state]))
+        valid = self.raw_env.valid_actions()  # only consider valid actions
+        if not exploit_only and np.random.rand() < self.epsilon:
+            return np.random.choice(valid)
+        
+        # Exploitation
+        q_vals = self.q_values[state]
+        q_vals_valid = {a: q_vals[a] for a in valid}
+
+        # Find all actions with the maximum Q-value
+        best_q = max(q_vals_valid.values())
+        best_actions = [a for a, q in q_vals_valid.items() if q == best_q]
+
+        # Randomly choose among the best actions (tie-breaking)
+        action = np.random.choice(best_actions)
+        return action
 
     def update(self, obs, action, reward, terminated, next_obs):
         state = self._state_key(obs)
         next_state = self._state_key(next_obs)
+
+        if self.prev_state is not None and next_state == self.prev_state:
+            # Penalize for staying in the same state
+            reward -= 0.1  # Adjust penalty as needed
+
         future_q = (not terminated) * np.max(self.q_values[next_state])
         target = reward + self.discount_factor * future_q
         td_error = target - self.q_values[state][action]
         self.q_values[state][action] += self.lr * td_error
         self.training_error.append(td_error)
+
+        self.prev_state = state if not terminated else None
 
     def decay_epsilon(self):
         self.epsilon = max(self.final_epsilon, self.epsilon - self.epsilon_decay)
@@ -68,4 +95,4 @@ if __name__ == "__main__":
 
         agent.decay_epsilon()
 
-    print("Training complete!")
+    print("Training complete! in agent file not learning file")

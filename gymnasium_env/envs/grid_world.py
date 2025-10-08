@@ -17,6 +17,9 @@ class GridWorldEnv(gym.Env):
 
     def __init__(self, render_mode=None, size=5):
         self.size = size  # The size of the square grid
+        self.max_steps = size * size  # The maximum number of steps per episode
+        self.current_step = 0
+
         self.window_size = 512  # The size of the PyGame window
 
         # Observations are dictionaries with the agent's and the target's location.
@@ -71,6 +74,8 @@ class GridWorldEnv(gym.Env):
         # We need the following line to seed self.np_random
         super().reset(seed=seed)
 
+        self.current_step = 0
+
         # Choose the agent's location uniformly at random
         self._agent_location = self.np_random.integers(0, self.size, size=2, dtype=int)
 
@@ -90,23 +95,53 @@ class GridWorldEnv(gym.Env):
 
         return observation, info
 
+    def valid_actions(self):
+        """Return a list of valid actions that don't move the agent off the grid."""
+        x, y = self._agent_location
+        actions = []
+        if x < self.size - 1:
+            actions.append(Actions.right.value)
+        if y < self.size - 1:
+            actions.append(Actions.up.value)
+        if x > 0:
+            actions.append(Actions.left.value)
+        if y > 0:
+            actions.append(Actions.down.value)
+        return actions
+
     def step(self, action):
+        self.current_step += 1
+        truncated = self.current_step >= self.max_steps
+
+        old_distance = np.linalg.norm(
+            self._agent_location - self._target_location, ord=1
+        )
+        
         # Map the action (element of {0,1,2,3}) to the direction we walk in
         direction = self._action_to_direction[action]
         # We use `np.clip` to make sure we don't leave the grid
         self._agent_location = np.clip(
             self._agent_location + direction, 0, self.size - 1
         )
+
+        new_distance = np.linalg.norm(
+            self._agent_location - self._target_location, ord=1
+        )
+
         # An episode is done iff the agent has reached the target
         terminated = np.array_equal(self._agent_location, self._target_location)
-        reward = 1 if terminated else -0.01  # small negative reward per move
+        if terminated:
+            reward = 1
+        else:
+            reward = -0.05 
+
         observation = self._get_obs()
         info = self._get_info()
 
         if self.render_mode == "human":
             self._render_frame()
 
-        return observation, reward, terminated, False, info
+        return observation, reward, terminated, truncated, info
 
     def render(self):
         if self.render_mode == "rgb_array":

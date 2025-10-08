@@ -7,21 +7,22 @@ import matplotlib.pyplot as plt
 from agents.qlearning_agent import GridWorldAgent  # import your agent
 
 # 1 Create and wrap the environment
-env = gym.make("gymnasium_env/GridWorld-v0")
+env = gym.make("gymnasium_env/GridWorld-v0", size=10)
 env = FlattenObservation(env)  # flatten dict obs into 1D array
+
+n_episodes = 10000
 
 # 2 Create the agent
 agent = GridWorldAgent(
     env=env,
-    learning_rate=0.1,
+    learning_rate=0.05,
     initial_epsilon=1.0,
-    epsilon_decay=1.0 / 5000,
+    epsilon_decay=1.0 / (n_episodes / 2),
     final_epsilon=0.05,
     discount_factor=0.95,
 )
 
 # 3 Training loop
-n_episodes = 10000
 episode_rewards = []  # ← track total reward per episode
 
 for episode in range(n_episodes):
@@ -44,6 +45,11 @@ for episode in range(n_episodes):
     if (episode + 1) % 1000 == 0:
         avg_reward = np.mean(episode_rewards[-100:])
         print(f"Episode {episode+1}/{n_episodes} — epsilon={agent.epsilon:.3f}")
+
+
+# Check how many unique states were visited
+visited_states = len(agent.q_values)
+print("Unique states visited:", visited_states)
 
 np.save("gridworld_q_table.npy", dict(agent.q_values))
 print("Q-table saved!")
