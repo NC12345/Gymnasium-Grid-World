@@ -2,7 +2,7 @@ Training Performance:
 ![Alt text](res/Training%20Performance.png?raw=true "Training Performance")
 
 Demo:
-[Download Demo](res/Demo.mp4.mp3)
+[Download Demo](res/Demo.mp4)
 # Gymnasium Examples
 Some simple examples of Gymnasium environments and wrappers.
 For some explanations of these examples, see the [Gymnasium documentation](https://gymnasium.farama.org).
