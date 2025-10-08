@@ -131,9 +131,9 @@ class GridWorldEnv(gym.Env):
         # An episode is done iff the agent has reached the target
         terminated = np.array_equal(self._agent_location, self._target_location)
         if terminated:
-            reward = 1
+            reward = 10
         else:
-            reward = -0.05 
+            reward = -0.2
 
         observation = self._get_obs()
         info = self._get_info()

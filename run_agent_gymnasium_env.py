@@ -1,7 +1,6 @@
 import gymnasium
 from gymnasium.wrappers import FlattenObservation
 from agents.qlearning_agent import GridWorldAgent  # Your trained agent
-import time
 import numpy as np
 from collections import defaultdict
 
@@ -28,10 +27,6 @@ for episode in range(episodes_to_watch):
         action = agent.get_action(obs, exploit_only=True)  # implement flag in agent if needed
         obs, reward, terminated, truncated, info = env.step(action)
         total_reward += reward
-
-        # Slow it down so you can see
-        time.sleep(0.3)
-
         done = terminated or truncated
 
     print(f"Episode {episode+1}: Total Reward = {total_reward}")

@@ -10,12 +10,12 @@ from agents.qlearning_agent import GridWorldAgent  # import your agent
 env = gym.make("gymnasium_env/GridWorld-v0", size=10)
 env = FlattenObservation(env)  # flatten dict obs into 1D array
 
-n_episodes = 10000
+n_episodes = 50000
 
 # 2 Create the agent
 agent = GridWorldAgent(
     env=env,
-    learning_rate=0.05,
+    learning_rate=0.4,
     initial_epsilon=1.0,
     epsilon_decay=1.0 / (n_episodes / 2),
     final_epsilon=0.05,
