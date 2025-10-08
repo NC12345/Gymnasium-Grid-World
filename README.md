@@ -1,3 +1,5 @@
+![Alt text](res/Training Performance.png?raw=true "Training Performance")
+
 # Gymnasium Examples
 Some simple examples of Gymnasium environments and wrappers.
 For some explanations of these examples, see the [Gymnasium documentation](https://gymnasium.farama.org).
