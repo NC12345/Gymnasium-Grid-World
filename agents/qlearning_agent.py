@@ -55,9 +55,9 @@ class GridWorldAgent:
         state = self._state_key(obs)
         next_state = self._state_key(next_obs)
 
-        if self.prev_state is not None and next_state == self.prev_state:
-            # Penalize for staying in the same state
-            reward -= 0.7  # Adjust penalty as needed
+        # if self.prev_state is not None and next_state == self.prev_state:
+        #     # Penalize for staying in the same state
+        #     reward -= 0.7  # Adjust penalty as needed
 
         future_q = (not terminated) * np.max(self.q_values[next_state])
         target = reward + self.discount_factor * future_q

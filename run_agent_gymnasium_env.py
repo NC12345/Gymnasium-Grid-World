@@ -12,7 +12,7 @@ env = FlattenObservation(env)  # flatten dict obs into 1D array
 agent = GridWorldAgent(env=env)
 
 # Load Q-table
-loaded_q = np.load("gridworld_q_table.npy", allow_pickle=True).item()
+loaded_q = np.load("q_table_lr=0.4.npy", allow_pickle=True).item()
 agent.q_values = defaultdict(lambda: np.zeros(env.action_space.n), loaded_q)
 print("Q-table loaded!")
 
@@ -29,6 +29,6 @@ for episode in range(episodes_to_watch):
         total_reward += reward
         done = terminated or truncated
 
-    print(f"Episode {episode+1}: Total Reward = {total_reward}")
+    # print(f"Episode {episode+1}: Total Reward = {total_reward}")
 
 env.close()

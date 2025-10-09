@@ -113,9 +113,9 @@ class GridWorldEnv(gym.Env):
         self.current_step += 1
         truncated = self.current_step >= self.max_steps
 
-        old_distance = np.linalg.norm(
-            self._agent_location - self._target_location, ord=1
-        )
+        # old_distance = np.linalg.norm(
+        #     self._agent_location - self._target_location, ord=1
+        # )
         
         # Map the action (element of {0,1,2,3}) to the direction we walk in
         direction = self._action_to_direction[action]
@@ -124,9 +124,9 @@ class GridWorldEnv(gym.Env):
             self._agent_location + direction, 0, self.size - 1
         )
 
-        new_distance = np.linalg.norm(
-            self._agent_location - self._target_location, ord=1
-        )
+        # new_distance = np.linalg.norm(
+        #     self._agent_location - self._target_location, ord=1
+        # )
 
         # An episode is done iff the agent has reached the target
         terminated = np.array_equal(self._agent_location, self._target_location)

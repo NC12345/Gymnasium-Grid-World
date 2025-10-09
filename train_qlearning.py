@@ -51,7 +51,7 @@ for episode in range(n_episodes):
 visited_states = len(agent.q_values)
 print("Unique states visited:", visited_states)
 
-np.save("gridworld_q_table.npy", dict(agent.q_values))
+np.save("q_table.npy", dict(agent.q_values))
 print("Q-table saved!")
 
 env.close()
