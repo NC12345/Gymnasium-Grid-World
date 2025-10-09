@@ -1,6 +1,7 @@
 import gymnasium as gym
 import gymnasium_env  # this registers GridWorld-v0
 from gymnasium.wrappers import FlattenObservation
+from tqdm import tqdm
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -25,7 +26,7 @@ agent = GridWorldAgent(
 # 3 Training loop
 episode_rewards = []  # ← track total reward per episode
 
-for episode in range(n_episodes):
+for episode in tqdm(range(n_episodes)):
     obs, info = env.reset()
     done = False
     total_reward = 0
@@ -44,7 +45,7 @@ for episode in range(n_episodes):
 
     if (episode + 1) % 1000 == 0:
         avg_reward = np.mean(episode_rewards[-100:])
-        print(f"Episode {episode+1}/{n_episodes} — epsilon={agent.epsilon:.3f}")
+        # print(f"Episode {episode+1}/{n_episodes} — epsilon={agent.epsilon:.3f}")
 
 
 # Check how many unique states were visited

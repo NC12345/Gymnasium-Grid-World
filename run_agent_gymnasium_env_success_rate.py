@@ -2,6 +2,7 @@ import gymnasium
 from gymnasium.wrappers import FlattenObservation
 from agents.qlearning_agent import GridWorldAgent
 import numpy as np
+from tqdm import tqdm
 from collections import defaultdict
 
 # Create environment WITHOUT rendering for faster evaluation
@@ -21,7 +22,7 @@ truncations = 0
 optimal_episodes = 0
 total_rewards = []
 
-for episode in range(episodes_to_test):
+for episode in tqdm(range(episodes_to_test)):
     obs, info = env.reset()
     done = False
     total_reward = 0
