@@ -1,8 +1,34 @@
+# Gymnasium GridWorld Q-Learning Agent
 Training Performance:
 ![Alt text](res/Training%20Performance.png?raw=true "Training Performance")
 
 Demo:
 [Download Demo](res/Demo.mp4)
+
+This project implements a custom **GridWorld environment** for reinforcement learning using **Gymnasium** and a **Q-learning agent**. The environment is a square grid where an agent navigates from a random starting location to a randomly placed target. The agent learns optimal paths through trial-and-error, receiving rewards for reaching the target and small penalties for each step to encourage efficiency.
+
+## Features
+
+### Custom Gymnasium environment
+- Grid of configurable size
+- Supports both **human-readable rendering** via PyGame and **fast evaluation mode**
+- `step` and `reset` methods follow the Gymnasium API
+
+### Q-learning agent
+- Learns optimal policies over episodes
+- Adjustable **learning rate (`lr`)** and **exploration rate (`epsilon`)**
+- Supports **loading and saving Q-tables** for continued training or evaluation
+
+### Reward shaping
+- Positive reward for reaching the target
+- Small step penalty to encourage shorter paths
+- Optional backtracking penalty
+
+### Evaluation metrics
+- **Success rate**: Percentage of episodes where the agent reaches the target
+- **Average reward**
+- **Optimal path rate**: Percentage of episodes where the agent takes the shortest possible path
+
 # Gymnasium Examples
 Some simple examples of Gymnasium environments and wrappers.
 For some explanations of these examples, see the [Gymnasium documentation](https://gymnasium.farama.org).
