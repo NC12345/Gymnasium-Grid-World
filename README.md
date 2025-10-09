@@ -1,4 +1,9 @@
 # Gymnasium GridWorld Q-Learning Agent
+
+Example:
+![Alt text](res/Demo%20Image.png?raw=true "Example")
+
+
 Training Performance:
 ![Alt text](res/Training%20Performance.png?raw=true "Training Performance")
 
